@@ -26,16 +26,19 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     // https://mvnrepository.com/artifact/io.javaoperatorsdk/operator-framework-spring-boot-starter
     implementation("io.javaoperatorsdk:operator-framework-spring-boot-starter:5.4.3")
-    // https://mvnrepository.com/artifact/io.fabric8/crd-generator-apt
-    implementation("io.fabric8:crd-generator-apt:6.12.1")
 
     // test
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.apache.logging.log4j", module = "log4j-slf4j2-impl")
+    }
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.testcontainers:junit-jupiter")
     // https://mvnrepository.com/artifact/io.javaoperatorsdk/operator-framework-spring-boot-starter-test
     testImplementation("io.javaoperatorsdk:operator-framework-spring-boot-starter-test:5.4.3")
+
+    // https://mvnrepository.com/artifact/io.fabric8/crd-generator-apt
+    annotationProcessor("io.fabric8:crd-generator-apt:6.11.0")
 }
 
 tasks.withType<KotlinCompile> {
