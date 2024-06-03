@@ -2,7 +2,6 @@ package com.example.kibanaoperator
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import io.fabric8.kubernetes.api.model.ManagedFieldsEntry
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder
 import io.fabric8.kubernetes.client.CustomResource
 import java.io.IOException
@@ -11,8 +10,11 @@ import java.io.InputStream
 object BuilderHelper {
     private val mapper = ObjectMapper(YAMLFactory())
 
-    fun <T : CustomResource<*, *>?> fromPrimary(primary: T, componentName: String): ObjectMetaBuilder {
-        val name = primary!!.metadata.name.ifBlank { "${Constants.OPERATOR_NAME}-${componentName}" }
+    fun <T : CustomResource<*, *>?> fromPrimary(
+        primary: T,
+        componentName: String,
+    ): ObjectMetaBuilder {
+        val name = primary!!.metadata.name.ifBlank { "${Constants.OPERATOR_NAME}-$componentName" }
         return ObjectMetaBuilder()
             .withNamespace(primary.metadata.namespace)
             .addToLabels("name", name)
@@ -21,7 +23,10 @@ object BuilderHelper {
             .addToLabels("ManagedBy", Constants.OPERATOR_NAME)
     }
 
-    fun <T> loadTemplate(clazz: Class<T>?, resource: String): T {
+    fun <T> loadTemplate(
+        clazz: Class<T>?,
+        resource: String,
+    ): T {
         var loader = Thread.currentThread().contextClassLoader
         if (loader == null) {
             loader = BuilderHelper::class.java.classLoader
@@ -36,7 +41,10 @@ object BuilderHelper {
     }
 
     @Throws(IOException::class)
-    fun <T> loadTemplate(clazz: Class<T>?, `is`: InputStream?): T {
+    fun <T> loadTemplate(
+        clazz: Class<T>?,
+        `is`: InputStream?,
+    ): T {
         return mapper.readValue(`is`, clazz)
     }
 }

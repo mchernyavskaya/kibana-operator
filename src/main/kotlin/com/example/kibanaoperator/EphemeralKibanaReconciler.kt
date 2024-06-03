@@ -8,16 +8,18 @@ import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent
 import org.springframework.stereotype.Component
 
 @ControllerConfiguration(
-    dependents = [Dependent(
-        name = EphemeralKibanaDeploymentResource.COMPONENT,
-        type = EphemeralKibanaDeploymentResource::class
-    )]
+    dependents = [
+        Dependent(
+            name = EphemeralKibanaDeploymentResource.COMPONENT,
+            type = EphemeralKibanaDeploymentResource::class,
+        ),
+    ],
 )
 @Component
-class EphemeralKibanaReconciler: Reconciler<EphemeralKibanaResource> {
+class EphemeralKibanaReconciler : Reconciler<EphemeralKibanaResource> {
     override fun reconcile(
         p0: EphemeralKibanaResource?,
-        p1: Context<EphemeralKibanaResource>?
+        p1: Context<EphemeralKibanaResource>?,
     ): UpdateControl<EphemeralKibanaResource> {
         // TODO: implement the reconciliation logic
         return UpdateControl.noUpdate()

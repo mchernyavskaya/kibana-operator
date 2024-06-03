@@ -12,7 +12,7 @@ import io.javaoperatorsdk.operator.api.ObservedGenerationAwareStatus
 @Group("com.example")
 @Version("v1")
 @ShortNames("ekr")
-class EphemeralKibanaResource: CustomResource<EphemeralKibanaSpec, EphemeralKibanaStatus>(), Namespaced {
+class EphemeralKibanaResource : CustomResource<EphemeralKibanaSpec, EphemeralKibanaStatus>(), Namespaced {
     override fun getSpec(): EphemeralKibanaSpec {
         return super.getSpec() ?: EphemeralKibanaSpec()
     }
@@ -31,4 +31,4 @@ class EphemeralKibanaSpec {
     var discoverVersion: Boolean = false // TODO: implement this feature
 }
 
-class EphemeralKibanaStatus: ObservedGenerationAwareStatus()
+class EphemeralKibanaStatus : ObservedGenerationAwareStatus()

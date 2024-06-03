@@ -6,9 +6,8 @@ import org.springframework.boot.runApplication
 @SpringBootApplication(
     scanBasePackages = [
         "io.javaoperatorsdk.operator.springboot.starter",
-        "com.example.kibanaoperator"
-    ]
-
+        "com.example.kibanaoperator",
+    ],
 )
 class KibanaOperatorApplication
 
