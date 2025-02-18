@@ -4,10 +4,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication(
-    scanBasePackages = [
-        "io.javaoperatorsdk.operator.springboot.starter",
-        "com.example.kibanaoperator",
-    ],
+//    scanBasePackages = [
+//        "io.javaoperatorsdk.operator.springboot.starter",
+//        "com.example.kibanaoperator",
+//    ]
 )
 class KibanaOperatorApplication
 

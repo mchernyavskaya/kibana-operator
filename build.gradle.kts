@@ -1,10 +1,12 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.23"
-    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    kotlin("kapt") version "1.9.23"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.2"
+    id("org.jetbrains.kotlin.plugin.spring") version "2.1.10"
 }
 
 group = "com.example"
@@ -12,6 +14,10 @@ version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+}
+
+ktlint {
+    version.set("1.4.1")
 }
 
 repositories {
@@ -38,16 +44,15 @@ dependencies {
     testImplementation("io.javaoperatorsdk:operator-framework-spring-boot-starter-test:5.4.3")
 
     // https://mvnrepository.com/artifact/io.fabric8/crd-generator-apt
-    annotationProcessor("io.fabric8:crd-generator-apt:6.11.0")
+    kapt("io.fabric8:crd-generator-apt:6.11.0")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }

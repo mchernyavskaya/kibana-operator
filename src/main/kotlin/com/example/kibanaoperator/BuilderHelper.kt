@@ -44,7 +44,5 @@ object BuilderHelper {
     fun <T> loadTemplate(
         clazz: Class<T>?,
         `is`: InputStream?,
-    ): T {
-        return mapper.readValue(`is`, clazz)
-    }
+    ): T = mapper.readValue(`is`, clazz)
 }

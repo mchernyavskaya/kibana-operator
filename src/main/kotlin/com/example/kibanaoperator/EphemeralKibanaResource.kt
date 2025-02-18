@@ -12,14 +12,12 @@ import io.javaoperatorsdk.operator.api.ObservedGenerationAwareStatus
 @Group("com.example")
 @Version("v1")
 @ShortNames("ekr")
-class EphemeralKibanaResource : CustomResource<EphemeralKibanaSpec, EphemeralKibanaStatus>(), Namespaced {
-    override fun getSpec(): EphemeralKibanaSpec {
-        return super.getSpec() ?: EphemeralKibanaSpec()
-    }
+class EphemeralKibanaResource :
+    CustomResource<EphemeralKibanaSpec, EphemeralKibanaStatus>(),
+    Namespaced {
+    override fun getSpec(): EphemeralKibanaSpec = super.getSpec() ?: EphemeralKibanaSpec()
 
-    override fun getStatus(): EphemeralKibanaStatus {
-        return super.getStatus() ?: EphemeralKibanaStatus()
-    }
+    override fun getStatus(): EphemeralKibanaStatus = super.getStatus() ?: EphemeralKibanaStatus()
 }
 
 class EphemeralKibanaSpec {

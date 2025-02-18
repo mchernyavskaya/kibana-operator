@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: kibana
-        image: docker.elastic.co/kibana/kibana:8.12.2
+        image: docker.elastic.co/kibana/kibana:8.17.2
         env:
         - name: ELASTICSEARCH_HOSTS
           value: https://elasticsearch:9200
@@ -26,6 +26,11 @@ spec:
           subPath: kibana.yml
       volumes:
       - name: kibana-config
+
+  selector:
+    matchLabels:
+      app: kibana
+
 
 
 

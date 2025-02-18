@@ -1,11 +1,18 @@
 package com.example.kibanaoperator
 
 import com.example.kibanaoperator.EphemeralKibanaDeploymentResource.Companion.COMPONENT
-import io.fabric8.kubernetes.api.model.*
-import io.fabric8.kubernetes.api.model.extensions.Deployment
-import io.fabric8.kubernetes.api.model.extensions.DeploymentBuilder
-import io.fabric8.kubernetes.api.model.extensions.DeploymentSpec
-import io.fabric8.kubernetes.api.model.extensions.DeploymentSpecBuilder
+import io.fabric8.kubernetes.api.model.EnvVarBuilder
+import io.fabric8.kubernetes.api.model.LabelSelector
+import io.fabric8.kubernetes.api.model.LabelSelectorBuilder
+import io.fabric8.kubernetes.api.model.ObjectMeta
+import io.fabric8.kubernetes.api.model.PodSpec
+import io.fabric8.kubernetes.api.model.PodSpecBuilder
+import io.fabric8.kubernetes.api.model.PodTemplateSpec
+import io.fabric8.kubernetes.api.model.PodTemplateSpecBuilder
+import io.fabric8.kubernetes.api.model.apps.Deployment
+import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder
+import io.fabric8.kubernetes.api.model.apps.DeploymentSpec
+import io.fabric8.kubernetes.api.model.apps.DeploymentSpecBuilder
 import io.javaoperatorsdk.operator.api.reconciler.Context
 import io.javaoperatorsdk.operator.api.reconciler.ResourceIDMatcherDiscriminator
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource
@@ -29,32 +36,29 @@ class EphemeralKibanaDeploymentResource(
             .build()
     }
 
-    private fun buildSelector(labels: Map<String, String>): LabelSelector {
-        return LabelSelectorBuilder()
+    private fun buildSelector(labels: Map<String, String>): LabelSelector =
+        LabelSelectorBuilder()
             .addToMatchLabels(labels)
             .build()
-    }
 
     private fun buildSpec(
         primary: EphemeralKibanaResource,
         primaryMeta: ObjectMeta,
-    ): DeploymentSpec {
-        return DeploymentSpecBuilder()
+    ): DeploymentSpec =
+        DeploymentSpecBuilder()
             .withSelector(buildSelector(primaryMeta.labels))
             .withReplicas(primary.spec.replicas)
             .withTemplate(buildPodTemplate(primary, primaryMeta))
             .build()
-    }
 
     private fun buildPodTemplate(
         primary: EphemeralKibanaResource,
         primaryMeta: ObjectMeta,
-    ): PodTemplateSpec {
-        return PodTemplateSpecBuilder()
+    ): PodTemplateSpec =
+        PodTemplateSpecBuilder()
             .withMetadata(primaryMeta)
             .withSpec(buildPodSpec(primary))
             .build()
-    }
 
     private fun buildPodSpec(primary: EphemeralKibanaResource): PodSpec {
         val imageVersion = primary.spec.version.ifBlank { Constants.DEFAULT_VERSION }
@@ -71,8 +75,7 @@ class EphemeralKibanaDeploymentResource(
                     .withName("XPACK_SECURITY_ENABLED")
                     .withValue(false.toString())
                     .build(),
-            )
-            .and()
+            ).and()
             .build()
     }
 

@@ -1,8 +1,10 @@
 root = true
 
-# [*.{kt,kts}]
+[*.{kt,kts}]
 # ij_kotlin_allow_trailing_comma = false
 # ij_kotlin_allow_trailing_comma_on_call_site = false
+ktlint_no-wildcard-imports = disabled
+
 
 
 
